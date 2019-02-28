@@ -27,7 +27,12 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/@nebular/theme/styles/prebuilt/corporate.css",
+              "node_modules/@nebular/bootstrap/styles/prebuilt/cosmic.css",
+              "node_modules/@nebular/bootstrap/styles/prebuilt/default.css",
+              "node_modules/@nebular/bootstrap/styles/prebuilt/corporate.css",
+              "node_modules/bootstrap/dist/css/bootstrap.css"
             ],
             "scripts": [],
             "es5BrowserSupport": true
