@@ -1,3 +1,30 @@
-<p>
-  signup works!
-</p>
+<nb-layout>
+    <nb-layout-column>
+    </nb-layout-column>
+    <nb-layout-column>
+        <nb-card>
+            <nb-card-body>
+              <label>Your account name<sup>*</sup></label>
+              <input type="text" shape="round" nbInput fullWidth status="success" [(ngModel)]="accountm" placeholder="ACCOUNT" style='margin-bottom:1em;'>
+              <label>Enter you email adress<sup>*</sup></label>
+              <input type="text" shape="round" [(ngModel)]="mailm" nbInput fullWidth status="success" placeholder="EMAIL" style='margin-bottom:1em;'>
+              <div>
+                  <label>Enter your birthday</label>
+                  <input nbInput placeholder="DATE OF BIRTH" [nbDatepicker]="formpicker" shape="round" status="success" fullWidth style='margin-bottom:1em;'>
+                  <nb-datepicker #formpicker></nb-datepicker>
+                </div>
+                <label>Your pasword<sup>*</sup></label>
+                <input type="password" shape="round" [(ngModel)]="passwordm" nbInput fullWidth status="success" placeholder="PASSWORD" style='margin-bottom:1em;'>
+                <label>Confirm your password<sup>*</sup></label>
+                <input type="password" shape="round" nbInput fullWidth [(ngModel)]="passwordCm" status="success" placeholder="CONFIRM PASSWORD" style='margin-bottom:1em;'>
+                <button nbButton status="success" size="medium" shape="semi-round">Submit</button>
+                <button nbButton status="success" size="medium" (click)='loginFacebook()' shape="semi-round" style="margin-top:1em;background-color:#3b5998 !important"><i class="fab fa-facebook-f bb"></i>Sign in with Facebook</button>
+                <button nbButton status="success" size="medium" (click)='loginGoogle()' shape="semi-round" style="margin-top:1em; background-color:#d62d20 !important"><i class="fab fa-google bb"></i>Sign in with Google+</button>
+
+            </nb-card-body>
+        </nb-card>
+    </nb-layout-column>
+    <nb-layout-column>
+      </nb-layout-column>
+
+</nb-layout>

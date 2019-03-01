@@ -1,3 +1,14 @@
-<p>
-  login works!
-</p>
+<router-outlet></router-outlet>
+
+<div class="container-fluid">
+<div class="row justify-content-center align-items-center x mr-5">
+<div class="col-4">
+    <h1 class="h3 font-weight-normal mb-3 text-center">Login here</h1>
+    <input type="email" nbInput fullWidth id="inputEmail" class="form-control mb-3" [(ngModel)]="acc" status="success" fieldSize="large" shape="semi-round" placeholder="Email address" required autofocus>
+    <input type="password" nbInput fullWidth id="inputPassword" [(ngModel)]="pass" status="success" fieldSize="large" shape="semi-round" class="form-control mb-3" placeholder="Password" required>
+    <button class="btn btn-lg btn-primary btn-block" (click)='logIn()' type="button">Login</button>
+    <button nbButton status="success" (click)='loginGoogle()' size="medium" shape="semi-round" style="margin-top:1em;background-color:#3b5998 !important; width:100%;"><i class="fab fa-facebook-f bb"></i>Login with Facebook</button>
+    <button nbButton status="success" (click)='loginFacebook()' size="medium" shape="semi-round" style="margin-top:1em; background-color:#d62d20 !important;width:100%;"><i class="fab fa-google bb"></i>Login with Google+</button>
+  </div>
+</div>
+</div>
