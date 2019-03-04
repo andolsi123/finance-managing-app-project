@@ -43,10 +43,14 @@ export class LoginComponent  {
   }
   loginGoogle() {
     this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
-    this.router.navigate([`../dashboard`], { relativeTo: this.route });
+    if (this.afAuth.user) {
+      this.router.navigate([`../dashboard`], { relativeTo: this.route });
+    }
   }
   loginFacebook() {
     this.afAuth.auth.signInWithPopup(new auth.FacebookAuthProvider());
-    this.router.navigate([`../dashboard`], { relativeTo: this.route });
+    if (this.afAuth.user) {
+      this.router.navigate([`../dashboard`], { relativeTo: this.route });
+    }
   }
 }

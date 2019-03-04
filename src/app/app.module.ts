@@ -7,17 +7,20 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbThemeModule, NbLayoutModule, NbCardModule, NbStepperModule, NbInputModule, NbDatepickerModule } from '@nebular/theme';
-import { NbButtonModule } from '@nebular/theme';
+import { NbButtonModule, NbSelectModule } from '@nebular/theme';
 
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './home/login/login.component';
 import { SignupComponent } from './home/signup/signup.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { HistoryComponent } from './dashboard/history/history.component';
+import { SelectComponent } from './dashboard/select/select.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     HomeComponent,
     LoginComponent,
     SignupComponent,
-    DashboardComponent
+    DashboardComponent,
+    HistoryComponent,
+    SelectComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +41,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     NbCardModule,
     NbButtonModule,
     NbStepperModule,
+    NbSelectModule,
     NbDatepickerModule.forRoot(),
     NbInputModule,
     HttpClientModule,
@@ -43,7 +49,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     AngularFireDatabaseModule,
     FormsModule,
     AngularFireAuthModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    ChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

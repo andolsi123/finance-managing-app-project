@@ -17,8 +17,8 @@ export class SignupComponent {
   passwordm: string;
   passwordCm: string;
   age: string;
-  items: Observable<any[]>;
-  itemsRef: AngularFireList<any[]>;
+  items: Observable<any>;
+  itemsRef: AngularFireList<any>;
 
   constructor(public afAuth: AngularFireAuth, private router: Router, private route: ActivatedRoute, public db: AngularFireDatabase) {
     this.itemsRef = db.list('items');
@@ -32,22 +32,30 @@ export class SignupComponent {
 
   loginGoogle() {
     this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
-    this.router.navigate([`../dashboard`], { relativeTo: this.route });
+    if (this.afAuth.user) {
+      this.itemsRef.push({account: this.afAuth.user});
+      this.router.navigate([`../dashboard`], { relativeTo: this.route });
+    }
   }
   loginFacebook() {
     this.afAuth.auth.signInWithPopup(new auth.FacebookAuthProvider());
-    this.router.navigate([`../dashboard`], { relativeTo: this.route });
+    if (this.afAuth.user) {
+      this.router.navigate([`../dashboard`], { relativeTo: this.route });
+    }
   }
   onSubmit() {
-    const data = {
-      email: this.mailm,
-      account: this.accountm,
-      password: this.passwordm,
-      age: this.age
-    };
-    if (this.passwordm === this.passwordCm) {
-      this.itemsRef.push(data);
-      this.router.navigate([`../login`], { relativeTo: this.route });
+    if (this.mailm && this.accountm && this.passwordm) {
+      // tslint:disable-next-line:prefer-const
+      let data = {
+        email: this.mailm,
+        account: this.accountm,
+        password: this.passwordm,
+        age: this.age
+      };
+      if (this.passwordm === this.passwordCm) {
+        this.itemsRef.push(data);
+        this.router.navigate([`../login`], { relativeTo: this.route });
+      }
     }
-    }
+  }
 }

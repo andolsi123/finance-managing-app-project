@@ -9,15 +9,15 @@ export class AppServiceService {
 
   constructor(private http: HttpClient) { }
 
-  getSymbol(): Observable <any> {
-    return this.http.get('http://data.fixer.io/api/symbols?access_key=d8c7c7aa670179bcf2589882df3480f8');
+  getSymbol(code: any): Observable <any> {
+    return this.http.get(`https://restcountries.eu/rest/v2/currency/${code}`);
   }
 
   getCurrency(): Observable <any> {
-    return this.http.get<any>('http://data.fixer.io/api/latest?access_key=d8c7c7aa670179bcf2589882df3480f8');
+    return this.http.get('http://data.fixer.io/api/latest?access_key=d8c7c7aa670179bcf2589882df3480f8');
   }
 
-  getHistory(date: string): Observable <any> {
+  getHistory(date: any): Observable <any> {
     return this.http.get(`http://data.fixer.io/api/${date}?access_key=d8c7c7aa670179bcf2589882df3480f8`);
   }
 

@@ -1,3 +1,55 @@
-<p>
-  dashboard works!
-</p>
+<nb-layout>
+  <nb-layout-header>
+      <img
+      class="mg"
+      src="../../assets/img/69b5fffb-5243-4592-9c44-f63622471811.png"
+    />
+    <button type="button" class="btn btn-light text-dark btn-sm bt1" [routerLink]="['/welcome']" routerLinkActive="router-link-active">
+      LOG  OUT
+    </button>
+  </nb-layout-header>
+  <nb-layout-column class="coll">
+      <router-outlet></router-outlet>
+      <div class="cont">
+    <h5>Add a new destination:</h5>
+      </div>
+    <div class="cont">
+    <h5 classs="tt" style="margin-right: .5em">FROM:</h5>
+    <nb-select status="info" classs="tt" size="small" (ngModelChange)="onChangeFrom($event)" [(ngModel)]="from">
+      <nb-option value="1" *ngFor="let ar of arr"> {{ ar }}</nb-option>
+      </nb-select>
+    </div>
+      <div class="cont">
+    <h5 classs="tt" style="margin-right: 1.9em">TO:</h5>
+    <nb-select placeholder="Canada" status="info" size="small" (ngModelChange)="onChangeTo($event)" [(ngModel)]="to">
+        <nb-option value="1" *ngFor="let ar of arr"> {{ ar }}</nb-option>
+
+      </nb-select>
+    </div>
+    <div class="cont">
+        <button nbButton status="info" (click)='onClick()' [routerLink]="['/dashboard/select']" routerLinkActive="router-link-active" >Confirm</button>
+      </div>
+  </nb-layout-column>
+  <nb-layout-column>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+        <div style="display: block;">
+            <canvas baseChart width="400" height="400"
+                        [datasets]="lineChartData"
+                        [labels]="lineChartLabels"
+                        [options]="lineChartOptions"
+                        [colors]="lineChartColors"
+                        [legend]="lineChartLegend"
+                        [chartType]="lineChartType"
+                        (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)"></canvas>
+            </div>
+          </div>
+  </div>
+</div>
+  </nb-layout-column>
+  <nb-layout-footer>
+    footer
+  </nb-layout-footer>
+</nb-layout>
