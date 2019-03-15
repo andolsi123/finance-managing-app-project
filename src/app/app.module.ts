@@ -8,12 +8,17 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbCardModule, NbStepperModule, NbInputModule, NbDatepickerModule } from '@nebular/theme';
-import { NbButtonModule, NbSelectModule } from '@nebular/theme';
+// tslint:disable-next-line:max-line-length
+import { NbThemeModule, NbLayoutModule, NbCardModule, NbStepperModule, NbInputModule, NbDatepickerModule, NbContextMenuModule, NbMenuModule } from '@nebular/theme';
+import { NbButtonModule, NbSelectModule, NbAccordionModule } from '@nebular/theme';
+import {MapModule, MapAPILoader, MarkerTypeId, IMapOptions, IBox, IMarkerIconInfo, WindowRef, DocumentRef, MapServiceFactory,
+  BingMapAPILoaderConfig, BingMapAPILoader,
+  GoogleMapAPILoader,  GoogleMapAPILoaderConfig
+} from 'angular-maps';
 
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './home/login/login.component';
@@ -21,6 +26,16 @@ import { SignupComponent } from './home/signup/signup.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HistoryComponent } from './dashboard/history/history.component';
 import { SelectComponent } from './dashboard/select/select.component';
+
+export function MapServiceProviderFactory() {
+  const bc: BingMapAPILoaderConfig = new BingMapAPILoaderConfig();
+  bc.apiKey = 'AkXQwHaeRR9GH41wKbY6kSb7C1cwspYU6Z4QiqycnxajgmRyaTdcBfUbjBROgqEG '; // your bing map key
+  bc.branch = 'experimental';
+      // to use the experimental bing brach. There are some bug fixes for
+      // clustering in that branch you will need if you want to use
+      // clustering.
+  return new BingMapAPILoader(bc, new WindowRef(), new DocumentRef());
+}
 
 @NgModule({
   declarations: [
@@ -42,17 +57,26 @@ import { SelectComponent } from './dashboard/select/select.component';
     NbButtonModule,
     NbStepperModule,
     NbSelectModule,
+    NbAccordionModule,
     NbDatepickerModule.forRoot(),
+    NbMenuModule.forRoot(),
     NbInputModule,
+    NbContextMenuModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     FormsModule,
     AngularFireAuthModule,
     AngularFireStorageModule,
-    ChartsModule
+    ChartsModule,
+    ReactiveFormsModule,
+    MapModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    {
+      provide: MapAPILoader, deps: [], useFactory: MapServiceProviderFactory
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

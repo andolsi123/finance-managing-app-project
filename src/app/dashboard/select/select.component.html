@@ -9,7 +9,68 @@
     </button>
   </nb-layout-header>
   <nb-layout-column>
+    <nb-card>
+      <nb-card-body>
+          <input type="text" nbInput fullWidth shape="rectangle" placeholder="AMMOUNT OF MONEY" status="info" >
 
+          <input [nbDatepicker]="formpicker" shape="rectangle" status="info" nbInput placeholder="FROM:">
+          <nb-datepicker #formpicker></nb-datepicker>
+
+          <input [nbDatepicker]="formpicker" shape="rectangle" status="info" nbInput placeholder="TO:">
+          <nb-datepicker #formpicker></nb-datepicker>
+
+          <select class="custom-select custom-select-lg" (ngModelChange)="onChange($event)" [(ngModel)]="cities" ng-selected="cities">
+              <option *ngFor="let ar of city">
+                <span *ngIf="ar.country == code">
+                {{ar.name}}
+                </span>
+              </option>
+            </select>
+            <input type="text" nbInput fullWidth shape="rectangle" placeholder="AMMOUNT OF MONEY" status="info" >
+
+          <nb-accordion multi>
+            <nb-accordion-item>
+              <nb-accordion-item-header>
+                Restaurent
+              </nb-accordion-item-header>
+              <nb-accordion-item-body>
+
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+            <nb-accordion-item>
+              <nb-accordion-item-header>
+               Hotel
+              </nb-accordion-item-header>
+              <nb-accordion-item-body>
+
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          </nb-accordion>
+
+          <button nbButton status="info" (click)='onSubmit()'>Confirm</button>
+
+        </nb-card-body>
+        </nb-card>
+  </nb-layout-column>
+  <nb-layout-column>
+<!--
+    <i class="fa"></i>
+<div style="height: 600px">
+  <x-map #xmap [Options]="_options" [Box]="_box">
+    <x-map-marker
+      [Longitude]="-95.46244"
+      [Title]="'My Marker'"
+      [IconInfo]="_iconInfo">
+        <x-info-box
+          [DisableAutoPan]="true"
+          [Title]="'My InfoBox'"
+          [Description]="'Hi, this is the content of the <strong>info window</strong>. It is your responsibility to implement functionality such as close, etc...'">
+            <x-info-box-action [Label]="'Click Me'" (ActionClicked)="_click()"></x-info-box-action>
+        </x-info-box>
+    </x-map-marker>
+  </x-map>
+</div>
+-->
   </nb-layout-column>
   <nb-layout-footer>footer</nb-layout-footer>
 </nb-layout>

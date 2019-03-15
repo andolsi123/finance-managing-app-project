@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase/app';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -17,10 +16,10 @@ export class LoginComponent  {
   items: Observable<any[]>;
   itemsRef: AngularFireList<any[]>;
   login: Observable<any[]>;
-  acc: string;
-  pass: string;
+  account: string;
+  password: string;
 
-  constructor(public afAuth: AngularFireAuth, public db: AngularFireDatabase, private router: Router, private route: ActivatedRoute) {
+  constructor(public afAuth: AngularFireAuth, public db: AngularFireDatabase, private router: Router) {
     this.itemsRef = db.list('items');
     // Use snapshotChanges().map() to store the key
     this.items = this.itemsRef.snapshotChanges().pipe(
@@ -30,27 +29,16 @@ export class LoginComponent  {
    );
   }
 
-  logIn() {
+  logIn(log) {
     this.items = this.db.list('items').valueChanges();
     this.items.forEach(element => {
       element.forEach(item => {
-        if (this.acc === item.account && this.pass === item.password) {
-          this.db.list('login').update('-LZv7TIJFSE4_l5rVzLn', this.acc);
-          this.router.navigate([`../dashboard`], { relativeTo: this.route });
+        if ((this.account === item.account || this.account === item.email) && this.password === item.password) {
+          this.db.list('login').update('-LZv7TIJFSE4_l5rVzLn', {log: this.account});
+          this.router.navigate([`/dashboard`]);
         }
       });
    });
   }
-  loginGoogle() {
-    this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
-    if (this.afAuth.user) {
-      this.router.navigate([`../dashboard`], { relativeTo: this.route });
-    }
-  }
-  loginFacebook() {
-    this.afAuth.auth.signInWithPopup(new auth.FacebookAuthProvider());
-    if (this.afAuth.user) {
-      this.router.navigate([`../dashboard`], { relativeTo: this.route });
-    }
-  }
+
 }

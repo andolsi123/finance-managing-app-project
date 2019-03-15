@@ -3,12 +3,22 @@
 <div class="container-fluid">
 <div class="row justify-content-center align-items-center x mr-5">
 <div class="col-4">
+  <form (ngSubmit)='logIn(loginForm)' #loginForm='ngForm'>
     <h1 class="h3 font-weight-normal mb-3 text-center">Login here</h1>
-    <input type="email" nbInput fullWidth id="inputEmail" class="form-control mb-3" [(ngModel)]="acc" status="success" fieldSize="large" shape="semi-round" placeholder="Email address" required autofocus>
-    <input type="password" nbInput fullWidth id="inputPassword" [(ngModel)]="pass" status="success" fieldSize="large" shape="semi-round" class="form-control mb-3" placeholder="Password" required>
-    <button class="btn btn-lg btn-primary btn-block" (click)='logIn()' type="button">Login</button>
-    <button nbButton status="success" (click)='loginGoogle()' size="medium" shape="semi-round" style="margin-top:1em;background-color:#3b5998 !important; width:100%;"><i class="fab fa-facebook-f bb"></i>Login with Facebook</button>
-    <button nbButton status="success" (click)='loginFacebook()' size="medium" shape="semi-round" style="margin-top:1em; background-color:#d62d20 !important;width:100%;"><i class="fab fa-google bb"></i>Login with Google+</button>
+    <input type="email" nbInput fullWidth id="inputEmail" [(ngModel)]="account" #acc="ngModel" name='acc' class="form-control mb-3" status="success" fieldSize="large" shape="semi-round" placeholder="Email address" required autofocus>
+    <div *ngIf="acc.invalid && (acc.touched || acc.dirty)">
+      <p *ngIf="acc.hasError('required')">
+        you need your account name or your email to log in.
+      </p>
+    </div>
+    <input type="password" id='pass' nbInput fullWidth id="inputPassword" [(ngModel)]="password" name='pass' #pass="ngModel" status="success" fieldSize="large" shape="semi-round" class="form-control mb-3" placeholder="Password" required>
+    <div *ngIf="pass.invalid && (pass.touched || pass.dirty)">
+        <p *ngIf="pass.hasError('required')">
+          you need your password to log in.
+        </p>
+      </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" name='submit' [disabled]='loginForm.invalid'>Login</button>
+  </form>
   </div>
 </div>
 </div>

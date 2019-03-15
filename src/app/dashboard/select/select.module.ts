@@ -1,5 +1,6 @@
 import { RouterModule } from '@angular/router'; // we also need angular router for Nebular to function properly
-import { NbSidebarModule, NbLayoutModule, NbSidebarService, NbButtonModule, NbCardModule, NbSelectModule } from '@nebular/theme';
+// tslint:disable-next-line:max-line-length
+import { NbSidebarModule, NbLayoutModule, NbSidebarService, NbInputModule, NbButtonModule, NbCardModule, NbSelectModule, NbAccordionModule } from '@nebular/theme';
 import { NgModule } from '@angular/core';
 
 @NgModule({
@@ -10,7 +11,9 @@ import { NgModule } from '@angular/core';
     NbSidebarModule,
     NbButtonModule,
     NbCardModule,
-    NbSelectModule
+    NbSelectModule,
+    NbAccordionModule,
+    NbInputModule
   ],
   providers: [],
   bootstrap: [NbSidebarService],

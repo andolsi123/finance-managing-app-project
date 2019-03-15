@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { AppServiceService } from '../app.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 
 @Component({
   selector: 'app-dashboard',
@@ -48,23 +49,26 @@ export class DashboardComponent implements OnInit {
   public lineChartLegend = true;
   public lineChartType = 'line';
 
-  countys: any;
+  items = [
+    { title: 'Profile' },
+    { title: 'Logout' },
+  ];
+
   currentCount: any;
-  currency: any;
-  base: any;
+  countries: any;
   from: any;
   to: any;
-  arr: Array<string>;
-  constructor(private county: AppServiceService, private router: Router, private route: ActivatedRoute) { }
-
+  // tslint:disable-next-line:max-line-length
+  constructor(private county: AppServiceService, private router: Router, private route: ActivatedRoute, public db: AngularFireDatabase) { }
+  /*
   ngOnInit() {
     this.county.getCurrency().subscribe(data => {
       this.currency = data.rates; this.base = data.base;
       // tslint:disable-next-line:prefer-const
       Object.entries(this.currency).forEach(
-        ([key, value]) => /*console.log(key, value)*/
-          this.county.getSymbol(value).subscribe(dataa => {
-            this.arr.push(dataa[0].name);
+        ([key, value]) => /*console.log(key, value)*//*
+          this.county.getSymbol(key).subscribe(dataa => {
+            this.arr.push(dataa.name);
             this.arr.forEach(element => {
               this.county.getLocation().subscribe(datas => {
                 this.currentCount = datas.country_name;
@@ -77,16 +81,40 @@ export class DashboardComponent implements OnInit {
       ));
     });
   }
+  */
 
-  onChangeTo(neww) {
-    this.to = neww;
-  }
-  onChangeFrom(neww) {
-    this.from = neww;
-  }
-  onClick() {
-    if (this.from && this.to) {
-      this.router.navigate([`../dashboard/select`], { relativeTo: this.route });
-    }
-  }
+ ngOnInit() {
+  this.county.getAllCountries().subscribe(data => {
+    this.countries = data;
+  });
+  this.county.getLocation().subscribe(datas => {
+    this.from = datas.country_name;
+  });
+  this.to = 'Afghanistan';
+ }
+
+
+changeTo(vv: any) {
+  this.to = vv;
+  this.county.to = vv;
+}
+changeFrom(neww: any) {
+  this.from = neww;
+  this.county.from = neww;
+}
+
+async onChangeTo(hh: any) {
+  const response =  await this.changeTo(hh);
+  return response;
+}
+  async onChangeFrom(neww: any) {
+  const response = await this.changeFrom(neww);
+  return response;
+}
+onClick() {
+  this.router.navigate([`../dashboard/select`], { relativeTo: this.route });
+}
+logOut() {
+  this.db.list('login').update('-LZv7TIJFSE4_l5rVzLn', {log: ''});
+}
 }
