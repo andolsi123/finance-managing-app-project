@@ -88,9 +88,10 @@ export class DashboardComponent implements OnInit {
     this.countries = data;
   });
   this.county.getLocation().subscribe(datas => {
+    this.county.from = datas.country_name;
     this.from = datas.country_name;
   });
-  this.to = 'Afghanistan';
+  this.county.to = 'Afghanistan';
  }
 
 

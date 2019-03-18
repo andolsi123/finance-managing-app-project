@@ -61,27 +61,27 @@ export class SelectComponent implements OnInit {
       for (let counry of dt) {
         if (counry.name === this.app.to) {
           this.code = counry.alpha2Code;
-          this.currCodeTo = counry.currencies.code;
+          this.currCodeTo = counry.currencies[0].code;
           this.cap = counry.capital;
         }
         if (counry.name === this.app.from) {
-          this.currCodeFrom = counry.currencies.code;
+          this.currCodeFrom = counry.currencies[0].code;
         }
       }
     });
     this.app.getCity().subscribe(data => {
      this.city = data.cities;
      // tslint:disable-next-line:prefer-const
-     for (let key of data.cities) {
+     for (let key of this.city) {
        if (key === this.cap) {
-         this.capLat = key.lat;
-         this.capLon = key.lon;
-       }
+         this.capLat = key.coord.lat;
+         this.capLon = key.coord.lon;
+        }
      }
-     this.app.getHotels(this.capLon, this.capLat).subscribe(dt => {
+     this.app.getHotels(this.capLat, this.capLon).subscribe(dt => {
       console.log(dt);
      });
-     this.app.getRest(this.capLon, this.capLat).subscribe(dt => {
+     this.app.getRest(this.capLat, this.capLon).subscribe(dt => {
       console.log(dt);
      });
     });
@@ -89,20 +89,18 @@ export class SelectComponent implements OnInit {
   }
 
   onChange(event: any) {
-    this.app.getCity().subscribe(data => {
-      // tslint:disable-next-line:prefer-const
-      for (let key of data.cities) {
-        if (event === key.name) {
-          this.cityLon = key.coord.lon;
-          this.cityLat = key.coord.lat;
-        }
+// tslint:disable-next-line: prefer-const
+    for (let key of this.city) {
+      if (event === key.name) {
+        this.cityLon = key.coord.lon;
+        this.cityLat = key.coord.lat;
       }
-      this.app.getHotels(this.cityLat, this.cityLon).subscribe(dt => {
-        console.log(dt);
-      });
-      this.app.getRest(this.cityLat, this.cityLon).subscribe(dt => {
-        console.log(dt);
-      });
+    }
+    this.app.getHotels(this.cityLat, this.cityLon).subscribe(dt => {
+      console.log(dt);
+    });
+    this.app.getRest(this.cityLat, this.cityLon).subscribe(dt => {
+      console.log(dt);
     });
   }
 
