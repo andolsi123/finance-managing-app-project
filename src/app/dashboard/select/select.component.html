@@ -11,30 +11,48 @@
   <nb-layout-column>
     <nb-card>
       <nb-card-body>
-          <input type="text" nbInput fullWidth shape="rectangle" placeholder="AMMOUNT OF MONEY" status="info" >
+          <input type="number" nbInput fullWidth shape="rectangle" placeholder="AMMOUNT OF MONEY" status="info" [(ngModel)]='money' (blur)='onBlurMoney()'>
+          <div *ngIf="moenyError" style='color:red;'>
+            <sup>*</sup>not enough money.
+          </div>
 
-          <input [nbDatepicker]="formpicker" shape="rectangle" status="info" nbInput placeholder="FROM:">
+          <input [nbDatepicker]="formpicker" shape="rectangle" status="info" nbInput placeholder="FROM:" [(ngModel)]="dateFrom">
           <nb-datepicker #formpicker></nb-datepicker>
 
-          <input [nbDatepicker]="formpicker" shape="rectangle" status="info" nbInput placeholder="TO:">
-          <nb-datepicker #formpicker></nb-datepicker>
-
-          <select class="custom-select custom-select-lg" (ngModelChange)="onChange($event)" [(ngModel)]="cities" ng-selected="cities">
-              <option *ngFor="let ar of city">
-                <span *ngIf="ar.country == code">
-                {{ar.name}}
-                </span>
-              </option>
+          <input [nbDatepicker]="formpicker2" shape="rectangle" status="info" nbInput placeholder="TO:" [(ngModel)]="dateTo" (blur)="onBlurTime()">
+          <nb-datepicker #formpicker2></nb-datepicker>
+                <div *ngIf="TimeError" style='color:red;'>
+                  <sup>*</sup>Invalid Date.
+                </div>
+             <select class="custom-select custom-select-lg vv" (ngModelChange)="onChange($event)" [(ngModel)]="cit" ng-selected="cit">
+              <ng-container *ngFor="let arr of city">
+                <option *ngIf="arr.country===code">
+                  {{arr.city}}
+                </option>
+              </ng-container>
             </select>
-            <input type="text" nbInput fullWidth shape="rectangle" placeholder="AMMOUNT OF MONEY" status="info" >
 
+            <input type="number" nbInput fullWidth shape="rectangle" placeholder="POCKET MONEY" status="info" [(ngModel)]="pockectMoney" (blur)='onBlurPocket()'>
+            <div *ngIf="pockectMoneyError" style='color:red;'>
+              <sup>*</sup>your pocket money exceed limits.
+            </div>
+            <div *ngIf="moenyError" style='color:red;'>
+              <sup>*</sup>not enough money.
+            </div>
           <nb-accordion multi>
             <nb-accordion-item>
               <nb-accordion-item-header>
                 Restaurent
               </nb-accordion-item-header>
               <nb-accordion-item-body>
-
+<div *ngFor='let rest of rests'>
+  {{rest.restaurant.location.address}}
+  {{rest.restaurant.price_range}}
+  {{rest.restaurant.currency}}
+  {{rest.restaurant.user_rating.aggregate_rating}}
+  {{rest.restaurant.name}}
+  <button (click)='veifres(rest.restaurant.price_range,rest.restaurant.name)'>verif</button>
+</div>
               </nb-accordion-item-body>
             </nb-accordion-item>
             <nb-accordion-item>
@@ -42,36 +60,51 @@
                Hotel
               </nb-accordion-item-header>
               <nb-accordion-item-body>
-
+<div *ngFor="let hotl of hotels">
+   {{hotl.hotel.name}}
+   {{hotl.hotel.address.lines[0]}}
+   {{hotl.offers[0].price.currency}}
+   {{hotl.offers[0].price.total}}
+    <button (click)='verifhotel(hotl.offers[0].price.total,hotl.hotel.name)'>verif</button>
+</div>
+<div *ngIf="hotelError" style='color:red;'>
+  <sup>*</sup>You can select only one hotel.
+</div>
               </nb-accordion-item-body>
             </nb-accordion-item>
           </nb-accordion>
-
           <button nbButton status="info" (click)='onSubmit()'>Confirm</button>
-
         </nb-card-body>
         </nb-card>
+<button (click)='openWindow()'nbButton>window</button>
+<button nbButton (click)="showToast('top-right', 'success')">Top Right</button>
+    <button nbButton (click)="showToast('bottom-left', 'info')">Bottom left</button>
   </nb-layout-column>
+
+  <ng-template #contentTemplate let-data>
+    <p>money :{{ money }}</p>
+    <p>pockectmoney :{{ pockectMoney }}</p>
+  </ng-template>
+
   <nb-layout-column>
 
-    <i class="fa"></i>
+<i class="fa"></i>
 <div style="height: 600px">
-  <x-map #xmap [Options]="_options" [Box]="_box">
-    <x-map-marker
-      [Latitude]="29.714994"
-      [Longitude]="-95.46244"
-      [Title]="'My Marker'"
-      [IconInfo]="_iconInfo">
-        <x-info-box
-          [DisableAutoPan]="true"
-          [Title]="'My InfoBox'"
-          [Description]="'Hi, this is the content of the <strong>info window</strong>. It is your responsibility to implement functionality such as close, etc...'">
-            <x-info-box-action [Label]="'Click Me'" (ActionClicked)="_click()"></x-info-box-action>
-        </x-info-box>
-    </x-map-marker>
-  </x-map>
+    <x-map #xmap [Options]="_options" [Box]="_box">
+      <x-cluster-layer [GridSize]="150" [ClusteringEnabled]="true" [UseDynamicSizeMarkers]="true" [DynamicMarkerBaseSize]="18" [DynamicMarkerRanges]="_ranges" >
+        <x-map-marker *ngFor="let m of _markersres; let i=index" [Latitude]="m.latitude" [Longitude]="m.longitude" [Title]="'My Marker ' + i.toString()" [IconInfo]="_iconInfo">
+            <x-info-box [DisableAutoPan]="true" [Title]="'My InfoBox ' + i.toString()" [Description]="'Hi, this is the content of the <strong>info window</strong>. It is your responsibility to implement functionality such as close, etc...'">
+                <x-info-box-action [Label]="'Click Me'" (ActionClicked)="_click(i)"></x-info-box-action>
+            </x-info-box>
+        </x-map-marker>
+        <x-map-marker *ngFor="let m of _markershot; let i=index" [Latitude]="m.latitude" [Longitude]="m.longitude" [Title]="'My Marker ' + i.toString()" [IconInfo]="_iconInfo">
+          <x-info-box [DisableAutoPan]="true" [Title]="'My InfoBox ' + i.toString()" [Description]="'Hi, this is the content of the <strong>info window</strong>. It is your responsibility to implement functionality such as close, etc...'">
+              <x-info-box-action [Label]="'Click Me'" (ActionClicked)="_click(i)"></x-info-box-action>
+          </x-info-box>
+      </x-map-marker>
+      </x-cluster-layer>
+    </x-map>
 </div>
-
   </nb-layout-column>
   <nb-layout-footer>footer</nb-layout-footer>
 </nb-layout>

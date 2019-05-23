@@ -13,7 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // tslint:disable-next-line:max-line-length
-import { NbThemeModule, NbLayoutModule, NbCardModule, NbStepperModule, NbInputModule, NbDatepickerModule, NbContextMenuModule, NbMenuModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbCardModule, NbStepperModule, NbInputModule, NbDatepickerModule, NbContextMenuModule, NbMenuModule, NbWindowModule, NbToastrModule } from '@nebular/theme';
 import { NbButtonModule, NbSelectModule, NbAccordionModule } from '@nebular/theme';
 import {MapModule, MapAPILoader, MarkerTypeId, IMapOptions, IBox, IMarkerIconInfo, WindowRef, DocumentRef, MapServiceFactory,
   BingMapAPILoaderConfig, BingMapAPILoader,
@@ -26,6 +26,7 @@ import { SignupComponent } from './home/signup/signup.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HistoryComponent } from './dashboard/history/history.component';
 import { SelectComponent } from './dashboard/select/select.component';
+
 
 export function MapServiceProviderFactory() {
   const bc: BingMapAPILoaderConfig = new BingMapAPILoaderConfig();
@@ -60,6 +61,8 @@ export function MapServiceProviderFactory() {
     NbAccordionModule,
     NbDatepickerModule.forRoot(),
     NbMenuModule.forRoot(),
+    NbWindowModule.forRoot({closeOnBackdropClick: true, hasBackdrop: true, closeOnEsc: true}),
+    NbToastrModule.forRoot(),
     NbInputModule,
     NbContextMenuModule,
     HttpClientModule,

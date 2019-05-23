@@ -4,8 +4,8 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './home/login/login.component';
 import { SignupComponent } from './home/signup/signup.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { HistoryComponent } from './dashboard/history/history.component';
 import { SelectComponent } from './dashboard/select/select.component';
+import { HistoryComponent } from './dashboard/history/history.component';
 
 const routes: Routes = [
   {path: '',  redirectTo: 'welcome', pathMatch: 'full'},

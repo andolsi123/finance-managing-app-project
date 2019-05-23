@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -19,7 +18,7 @@ export class LoginComponent  {
   account: string;
   password: string;
 
-  constructor(public afAuth: AngularFireAuth, public db: AngularFireDatabase, private router: Router) {
+  constructor(public db: AngularFireDatabase, private router: Router) {
     this.itemsRef = db.list('items');
     // Use snapshotChanges().map() to store the key
     this.items = this.itemsRef.snapshotChanges().pipe(
@@ -38,7 +37,7 @@ export class LoginComponent  {
           this.router.navigate([`/dashboard`]);
         }
       });
-   });
+    });
   }
 
 }

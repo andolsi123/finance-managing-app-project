@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AngularFireList, AngularFireDatabase } from '@angular/fire/database';
@@ -20,10 +19,9 @@ export class SignupComponent implements OnInit {
   items: Observable<any>;
   itemsRef: AngularFireList<any>;
 
-  constructor(public afAuth: AngularFireAuth, private router: Router, public db: AngularFireDatabase) {}
+  constructor(private router: Router, public db: AngularFireDatabase) {}
 
   ngOnInit() {}
- 
   async blr() {
     this.boolAcc = false;
     this.boolEmail = false;
@@ -42,15 +40,15 @@ export class SignupComponent implements OnInit {
   }
 
   pre() {
-        const data = {
-          email: this.mailm,
-          account: this.accountm,
-          password: this.passwordm,
-          age: new Date(this.age)
-        };
-        this.db.list('items').push(data);
-        this.router.navigateByUrl('/welcome/login');
-      }
+    const data = {
+      email: this.mailm,
+      account: this.accountm,
+      password: this.passwordm,
+      age: new Date(this.age)
+    };
+    this.db.list('items').push(data);
+    this.router.navigateByUrl('/welcome/login');
+  }
 
   onSubmit() {
     this.pre();

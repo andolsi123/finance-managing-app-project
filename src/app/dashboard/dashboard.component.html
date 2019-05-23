@@ -22,7 +22,7 @@
       </div>
     <div class="cont">
     <h5 classs="tt" style="margin-right: .5em">FROM:</h5>
-      <select class="custom-select custom-select-lg" (ngModelChange)="onChangeFrom($event)" [(ngModel)]="from" ng-selected="from">
+      <select class="custom-select custom-select-lg vv" (ngModelChange)="onChangeFrom($event)" [(ngModel)]="from" ng-selected="from">
         <option *ngFor="let ar of countries">
           {{ar.name}}
         </option>
@@ -30,7 +30,7 @@
     </div>
       <div class="cont">
     <h5 classs="tt" style="margin-right: 1.9em">TO:</h5>
-      <select class="custom-select custom-select-lg" (ngModelChange)="onChangeTo($event)" [(ngModel)]="to" ng-selected="to">
+      <select class="custom-select custom-select-lg vv" (ngModelChange)="onChangeTo($event)" [(ngModel)]="to" ng-selected="to">
         <option *ngFor="let ar of countries">
           {{ar.name}}
         </option>
